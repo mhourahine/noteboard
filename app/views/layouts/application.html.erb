@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Funcanvas</title>
+  <title>NoteBoard</title>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -12,9 +12,9 @@
 	<div class='row-fluid'>
 		<div class='navbar navbar-inverse'>
 			<div class='navbar-inner'>
-				<a class='brand' href="#">Fun Canvas</a>
+				<a class='brand' href="#">NoteBoard</a>
 				<ul class='nav'>
-					<li><%= link_to '+','#',id:'new_link' %></li>
+					<li><%= link_to raw("#{fa_icon('plus')} Add Note"),'#',id:'new_link' %></li>
 				</ul>
 			</div>
 		</div>

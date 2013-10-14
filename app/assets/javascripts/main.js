@@ -26,7 +26,7 @@ app.resizeCanvas = function() {
 };
 
 app.boxCreate = function() {
-	var data = { box: { title:'New Box' }};
+	var data = { box: { title:'New Note' }};
 	$.post(app.routes.boxes.create, data, function(response) {
 		$.box(response).appendTo('#canvas');
 	});
