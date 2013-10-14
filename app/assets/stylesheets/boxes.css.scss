@@ -1,3 +1,40 @@
-// Place all the styles related to the boxes controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.box {
+	position: absolute;
+	padding: 0;
+
+	.title-bar {
+		vertical-align: middle;
+		width: 100%;
+		margin: 0px;
+		padding: 3px 0 2px 0;
+		background-color: #333;
+		cursor: move;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+
+		.title {
+			font-size: 12px;
+			color: #eee;
+			line-height: 130%;
+			margin-left: 3px;
+			cursor: text;
+		}
+
+		.remove {
+			float: right;
+			margin-right: 3px;
+			color: white;
+			cursor: pointer;
+		}
+	}
+
+	.content-container {
+		width: 100%;
+		margin: 0;
+		
+		.content {
+			padding: 3px;
+			overflow: hidden;	
+		}
+	}
+}

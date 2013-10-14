@@ -1,8 +1,21 @@
 if (window.app === undefined) { window.app = {}; }
 
-window.app.boxes = [];
-window.app.Box = function(options) {
+$.boxes = [];
+$.fn.getBoxData = function() {
+		var data = {};
+		data.id = this.attr('id').substring(3,this.attr('id').length);
+		data.title = this.children('.title-bar').children('.title').html();
+		data.content = this.children('.content-container').children('.content').html();
+		data.top = this.position().top;
+		data.left = this.position().left;
+		data.height = this.height();
+		data.width = this.width();
+		return data;
+	};
+
+$.box = function(options) {
 	console.log(options);
+	var element = $('<div />');
 	var defaults = {
 		title: '',
 		content: '',
@@ -11,37 +24,49 @@ window.app.Box = function(options) {
 		height: 100,
 		width: 100
 	};
-	this.options = $.extend({}, defaults, options);
-	
-	this.init = function() {
-		this.element = $('<div class="box" id="box'+this.options.id+'"></div>');
-		var content = '';
-		content += '<div class="title">'+this.options.title+'</div>';
-		content += '<div class="content">'+this.options.content+'</div>';
-		this.element.html(content);
+	var boxOptions = $.extend({}, defaults, options);
 
-		this.element.css('top',this.options.top);
-		this.element.css('left',this.options.left);
-		this.element.css('height',this.options.height);
-		this.element.css('width',this.options.width);
+	element.attr('class', 'box well well-small');
+	element.attr('id','box'+boxOptions.id);
+		
+	var content = '';
+	content += '<div class="title-bar">';
+	content += '<span class="title" contentEditable>'+boxOptions.title+'</span>';
+	content += '<span class="remove"><i class="icon-remove"></i></span>';
+	content += '</div>';
+	content += '<div class="content-container">';
+	content += '<div class="content" contentEditable>'+boxOptions.content+'</div>';
+	content += '</div>';
+	element.html(content);
 
-		this.element.draggable({ 
-			handle: '.title',
-			stop: function(e, ui) {
-				console.log(this);
-			}
-		});
-		this.element.resizable({
-			stop: function(e, ui) {
-				console.log(this);
-			}
-		});
-		return true;
-	};
+	element.css('position','absolute');
+	element.css('top',boxOptions.top+'px');
+	element.css('left',boxOptions.left+'px');
+	element.css('height',boxOptions.height+'px');
+	element.css('width',boxOptions.width+'px');
 
-	this.addTo = function(element) {
-		this.init();
-	 	$(element).append(this.element);
-	};
-	
-}
+	element.draggable({ 
+		handle: '.title-bar',
+		containment: 'parent',
+		zIndex: 100,
+		stop: function(e, ui) {
+			$(this).trigger('box:updated',this);
+		}
+	});
+	element.resizable({
+		stop: function(e, ui) {
+			$(this).trigger('box:updated',this);
+		}
+	});
+
+	element.find('.remove').click(function() {
+		if (! confirm("Are you sure?")) return false;
+
+		var box = $(this).parents('.box');
+		box.trigger('box:deleted',box.getBoxData().id);
+		box.remove();
+	});
+
+	$.boxes.push(element);
+	return element;
+};

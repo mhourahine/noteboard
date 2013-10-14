@@ -1,5 +1,5 @@
 class BoxesController < ApplicationController
-	before_action :set_box, only: [:show, :update, :destory]
+	before_action :set_box, only: [:show, :update, :destroy]
 
 	def index
 		@boxes = Box.all
@@ -39,7 +39,7 @@ class BoxesController < ApplicationController
 	end
 
 	def destroy
-		@widget_set.destroy
+		@box.destroy
 		respond_to do |format|
 		  format.html { redirect_to widget_sets_url }
 		  format.json { head :no_content }
@@ -54,6 +54,6 @@ private
 
 	# Never trust parameters from the scary internet, only allow the white list through.
     def box_params
-      params.require(:box).permit(:title, :context, :width, :height, :top, :left)
+      params.require(:box).permit(:title, :content, :width, :height, :top, :left)
     end
 end
