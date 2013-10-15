@@ -4,7 +4,7 @@ $.boxes = [];
 $.fn.getBoxData = function() {
 		var data = {};
 		data.id = this.attr('id').substring(3,this.attr('id').length);
-		data.title = this.children('.title-bar').children('.title').html();
+		//data.title = this.children('.title-bar').children('.title').html();
 		data.content = this.children('.content-container').children('.content').html();
 		data.top = this.position().top;
 		data.left = this.position().left;
@@ -13,9 +13,7 @@ $.fn.getBoxData = function() {
 		return data;
 	};
 
-$.box = function(options) {
-	console.log(options);
-	var element = $('<div />');
+$.fn.box = function(options) {
 	var defaults = {
 		title: '',
 		content: '',
@@ -26,26 +24,26 @@ $.box = function(options) {
 	};
 	var boxOptions = $.extend({}, defaults, options);
 
-	element.attr('class', 'box well well-small');
-	element.attr('id','box'+boxOptions.id);
+	$(this).attr('class', 'box well well-small');
+	$(this).attr('id','box'+boxOptions.id);
 		
 	var content = '';
 	content += '<div class="title-bar">';
-	content += '<span class="title" contentEditable>'+boxOptions.title+'</span>';
+	//content += '<span class="title" contentEditable>'+boxOptions.title+'</span>';
 	content += '<span class="remove"><i class="icon-remove"></i></span>';
 	content += '</div>';
 	content += '<div class="content-container">';
 	content += '<div class="content" contentEditable>'+boxOptions.content+'</div>';
 	content += '</div>';
-	element.html(content);
+	$(this).html(content);
 
-	element.css('position','absolute');
-	element.css('top',boxOptions.top+'px');
-	element.css('left',boxOptions.left+'px');
-	element.css('height',boxOptions.height+'px');
-	element.css('width',boxOptions.width+'px');
+	$(this).css('position','absolute');
+	$(this).css('top',boxOptions.top+'px');
+	$(this).css('left',boxOptions.left+'px');
+	$(this).css('height',boxOptions.height+'px');
+	$(this).css('width',boxOptions.width+'px');
 
-	element.draggable({ 
+	$(this).draggable({ 
 		handle: '.title-bar',
 		containment: 'parent',
 		zIndex: 100,
@@ -53,13 +51,13 @@ $.box = function(options) {
 			$(this).trigger('box:updated',this);
 		}
 	});
-	element.resizable({
+	$(this).resizable({
 		stop: function(e, ui) {
 			$(this).trigger('box:updated',this);
 		}
 	});
 
-	element.find('.remove').click(function() {
+	$(this).find('.remove').click(function() {
 		if (! confirm("Are you sure?")) return false;
 
 		var box = $(this).parents('.box');
@@ -67,6 +65,6 @@ $.box = function(options) {
 		box.remove();
 	});
 
-	$.boxes.push(element);
-	return element;
+	$.boxes.push($(this));
+	return $(this);
 };

@@ -15,7 +15,7 @@ app.init = function() {
 	$.getJSON(app.routes.boxes.all, function(data) {
 		console.log(data);
 		data.forEach(function(box_data) {
-			$.box(box_data).appendTo('#canvas');
+			$('<div />').box(box_data).appendTo('#canvas');
 		});
 	});
 };
@@ -26,9 +26,9 @@ app.resizeCanvas = function() {
 };
 
 app.boxCreate = function() {
-	var data = { box: { title:'New Note' }};
+	var data = { box: { top: 0, left: 0, height: 100, width: 100 }};
 	$.post(app.routes.boxes.create, data, function(response) {
-		$.box(response).appendTo('#canvas');
+		$('<div />').box(response).appendTo('#canvas');
 	});
 };
 

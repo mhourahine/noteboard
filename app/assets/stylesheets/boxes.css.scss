@@ -1,6 +1,7 @@
 .box {
 	position: absolute;
 	padding: 0;
+	z-index: 100;
 
 	.title-bar {
 		vertical-align: middle;
@@ -11,6 +12,7 @@
 		cursor: move;
 		border-top-left-radius: 3px;
 		border-top-right-radius: 3px;
+		min-height: 12px;
 
 		.title {
 			font-size: 12px;
@@ -22,9 +24,13 @@
 
 		.remove {
 			float: right;
+			margin: 0;
+			padding: 0;
 			margin-right: 3px;
 			color: white;
 			cursor: pointer;
+			font-size: 12px;
+			line-height: 1em;
 		}
 	}
 
